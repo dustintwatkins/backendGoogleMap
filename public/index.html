@@ -14,7 +14,8 @@
 		$("#searchButton").click(function(e){
 			e.preventDefault();
 			var city = document.getElementById("searchCity").value;
-			var myurl = "/getTrail?q="+city;
+		//	var myurl = "/getTrail?q="+city;
+			var myurl = "http://api.walmartlabs.com/v1/stores?apiKey=9j6xxgnu89aaswsuz868uzk2&city=" + city + "&format=json";
 			var list;
 			console.log(myurl);
 			document.getElementById("pac-input").value = city;
@@ -128,6 +129,9 @@
     </style>
   </head>
   <body>
+<h1>Find a Walmart near you!</h1>
+<br>
+<br>
 <form> Search by City: <input type = "text" id="searchCity" value = ""> 
 	<br>
 	<input type = "submit" value = "Search" id = "searchButton">

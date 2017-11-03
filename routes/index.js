@@ -10,18 +10,22 @@ router.get('/', function(req, res, next) {
 
 router.get('/getTrail', function(req, res, next){
 	console.log("in getTrail router");
-
 	var result = [];
-	https.get('http://api.walmartlabs.com/v1/stores?apiKey=9j6xxgnu89aaswsuz868uzk2&city=' + req.query.q +'&format=json',
-	 function(response){
+	var url = 'http://api.walmartlabs.com/v1/stores?apiKey=9j6xxgnu89aaswsuz868uzk2&city=' + req.query.q +'&format=json';
+	console.log(url);
+	https.get(url, function(response){
+		console.log("1");
 		response.on('data', function(d){
+		console.log("2");
 		result += d;
-		});
+	});
+	console.log("3");
 	respons.on('end', function(){
+		console.log("4");
 		res.status(200).json(JSON.parse(result));
 	})
 	})
-		
-});
+		console.log("end");
+})
 
 module.exports = router;
