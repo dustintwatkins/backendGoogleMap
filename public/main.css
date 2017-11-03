@@ -109,8 +109,14 @@ body {margin:0;}
     background-color: RoyalBlue;;
     color: white;
 }
-
-
+.topnav, .citySearch, #map {
+   margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+.footer {
+    padding-bottom: 100px;
+}
 
 
 

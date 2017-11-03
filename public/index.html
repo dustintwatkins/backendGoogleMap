@@ -17,7 +17,7 @@
 			var myurl = "/getTrail?q="+city;
 			var list;
 			console.log(myurl);
-			document.getElementById("pac-input").value = city;
+			//document.getElementById("pac-input").value = city;
 			$.ajax({
 				url : myurl,
 				dataType : "json",
@@ -29,16 +29,27 @@
 						var name = parsed_json[i]['name'];
 						var streetAddress = parsed_json[i]['streetAddress'];
 						var phoneNum = parsed_json[i]['phoneNumber'];
+						var streetAddress1 = parsed_json[0]['streetAddress'];
 						list += "<li>Name: " + name;
 						list += "<li>Address: " + streetAddress;
 						list += "<li>Phone Number: " + phoneNum;
 						list += "<br>";
 						list += "<br>";
 					}
+
 					list += "</ul>"
 					$("#walmart").html(list);
+					$("#pac-input").val(streetAddress1);
+
+
 				}
 			});
+			
+			setTimeout(function() {
+         				var input = $("#pac-input").get(0);
+          				google.maps.event.trigger(input, 'focus')
+          				google.maps.event.trigger(input, 'keydown', {keyCode: 13});
+      			}, 600);
 		});
 	});
 	</script>
@@ -52,10 +63,9 @@
   <a href="#about">About</a>
 </div>
 
-<div style="padding-left:16px">
+<div class="citySearch" style="padding-left:16px">
 
 <h1>Find a Walmart near you!</h1>
-<br>
 <br>
 <form> Search by City: <input type = "text" id="searchCity" value = "">
         <br>
@@ -67,10 +77,12 @@
     
 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
+
+<div class="footer"></div>
     <script>
       function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
+          center: {lat: 40.233844, lng: -111.658534},
           zoom: 13,
           mapTypeId: 'roadmap'
         });
