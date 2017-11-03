@@ -4,13 +4,41 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>City Search</title>
+	
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
 	<script>
-		$("searchButton").click(function(e){
-			var myurl = "/getTrail?q="+$("searchCity").val();
+	$(document).ready(function(){
+		$("#searchButton").click(function(e){
 			e.preventDefault();
+			var city = document.getElementById("searchCity").value;
+			var myurl = "/getTrail?q="+city;
+			var list;
 			console.log(myurl);
+			document.getElementById("pac-input").value = city;
+			$.ajax({
+				url : myurl,
+				dataType : "json",
+					success : function(parsed_json){
+					console.log("success enter");
+					var i;
+					list = "<ul>";
+					for(i = 0; i < 3; i++){
+						var name = parsed_json[i]['name'];
+						var streetAddress = parsed_json[i]['streetAddress'];
+						var phoneNum = parsed_json[i]['phoneNumber'];
+						list += "<li>Name: " + name;
+						list += "<li>Address: " + streetAddress;
+						list += "<li>Phone Number: " + phoneNum;
+					}
+					list += "</ul>"
+					$("#walmart").html(list);
+				}
+			});
 		});
-		
+	});
 	</script>
 
     <style>
@@ -100,12 +128,12 @@
     </style>
   </head>
   <body>
-<form> Search by City: <input type = "text" id="searchCity" value = "city"> 
+<form> Search by City: <input type = "text" id="searchCity" value = ""> 
 	<br>
-	<input type = "Search" value = "Search" id = "searchButton">
+	<input type = "submit" value = "Search" id = "searchButton">
 </form>
 <br>
-
+	<div id = "walmart"></div>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
     <script>
